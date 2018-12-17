@@ -4,12 +4,15 @@ package io.github.minhaz1217.spring_barebone_login.Model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Document(collection = "User")
 public class User {
-    String id;
-    String username;
-    String password;
+    @Id @GeneratedValue
+    private String id;
+    private String username;
+    private String password;
 
     private User(){}
     public User(String username, String password) {
