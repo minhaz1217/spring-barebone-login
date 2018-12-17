@@ -20,11 +20,19 @@ public class HomeController {
         return "HELLO";
     }
 
-
-    @RequestMapping(method = RequestMethod.GET, value = "/login2")
-    public String getLogin2(){
+    @RequestMapping(method = RequestMethod.GET, value = "/signin")
+    public String getSignin(){
         return "Login";
     }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/signin")
+    public String postSignin(@RequestParam String user, @RequestParam String pass){
+        System.out.println(user + " " + pass);
+        return "THIS IS THE POST SIGNIN";
+        //return userRepository.findUserByUsernameAndPassword(user, pass);
+    }
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/test/{user}/{pass}")
     public User fromUsername(@PathVariable String user, @PathVariable String pass){
