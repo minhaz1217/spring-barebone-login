@@ -23,12 +23,14 @@ public class DBSeeder implements CommandLineRunner{
     public void run(String... args) throws Exception {
         userRepository.deleteAll();
         roleRepository.deleteAll();
+        System.out.println("DB LOADED: USERS: " + userRepository.count() + " ROLES: " + roleRepository.count());
+
         roleRepository.save(new Role("ADMIN"));
         roleRepository.save(new Role("USER"));
 
         userRepository.save(new User("user", "user", "user@user.com" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
         userRepository.save(new User("1", "1", "1" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
         userRepository.save(new User("admin", "admin", "admin" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
-
+        System.out.println("DB LOADED: USERS: " + userRepository.count() + " ROLES: " + roleRepository.count());
     }
 }
