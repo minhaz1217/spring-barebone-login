@@ -15,18 +15,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception         {
         auth.inMemoryAuthentication()
-            .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
+            .withUser("user").password(new BCryptPasswordEncoder().encode("password")).roles("USER")
             .and()
-            .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
+            .withUser("admin").password(new BCryptPasswordEncoder().encode("admin")).roles("ADMIN")
             .and()
-            .withUser("1").password(passwordEncoder().encode("1")).roles("ADMIN");
+            .withUser("1").password(new BCryptPasswordEncoder().encode("1")).roles("ADMIN");
     }
 
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 /*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
