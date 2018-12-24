@@ -20,7 +20,7 @@ public class User {
     @DBRef
     private Set<Role> roles;
 
-    private User(){}
+    public User(){}
 
     public User(String username, String password, String email, boolean enabled, Set<Role> roles) {
         this.username = username;

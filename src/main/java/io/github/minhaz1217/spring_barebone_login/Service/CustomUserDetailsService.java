@@ -5,6 +5,7 @@ import io.github.minhaz1217.spring_barebone_login.Model.Role;
 import io.github.minhaz1217.spring_barebone_login.Model.User;
 import io.github.minhaz1217.spring_barebone_login.Repository.RoleRepository;
 import io.github.minhaz1217.spring_barebone_login.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +18,15 @@ import java.util.*;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
-
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public User findByEmail(String email){
+    public User findUserByEmail(String email){
         return userRepository.findUserByEmail(email);
     }
 
