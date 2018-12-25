@@ -26,7 +26,7 @@ public class HomeController {
     HomeController(UserRepository userRepository){
         this.userRepository = userRepository;
     }
-
+    /*
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/" )
     public String getRoot(){
@@ -64,7 +64,7 @@ public class HomeController {
         return userRepository.findUserByUsernameAndPassword(user, pass);
     }
 
-
+*/
 
 
 
