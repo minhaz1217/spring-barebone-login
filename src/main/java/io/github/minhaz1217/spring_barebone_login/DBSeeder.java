@@ -5,6 +5,7 @@ import io.github.minhaz1217.spring_barebone_login.Model.User;
 import io.github.minhaz1217.spring_barebone_login.Repository.RoleRepository;
 import io.github.minhaz1217.spring_barebone_login.Repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -21,16 +22,34 @@ public class DBSeeder implements CommandLineRunner{
     }
     @Override
     public void run(String... args) throws Exception {
-        userRepository.deleteAll();
-        roleRepository.deleteAll();
+        //userRepository.deleteAll();
+        //roleRepository.deleteAll();
+
         System.out.println("DB LOADED: USERS: " + userRepository.count() + " ROLES: " + roleRepository.count());
 
-        roleRepository.save(new Role("ADMIN"));
-        roleRepository.save(new Role("USER"));
+        //roleRepository.save(new Role("ADMIN"));
+        //roleRepository.save(new Role("USER"));
+        Role adminRole = roleRepository.findRoleByRole("ADMIN");
+        if (adminRole == null) {
+            Role newAdminRole = new Role();
+            newAdminRole.setRole("ADMIN");
+            roleRepository.save(newAdminRole);
+        }
 
-        userRepository.save(new User("user", "user", "user@user.com" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
-        userRepository.save(new User("1", "1", "1" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
-        userRepository.save(new User("admin", "admin", "admin" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
+        Role userRole = roleRepository.findRoleByRole("USER");
+        if (userRole == null) {
+            Role newUserRole = new Role();
+            newUserRole.setRole("USER");
+            roleRepository.save(newUserRole);
+        }
+
+        if(userRepository.findUserByEmail("123@123") == null){
+            userRepository.save(new User("123@123", new BCryptPasswordEncoder().encode("123@123"), "123@123" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("ADMIN") ) ) ));
+        }
+        if (userRepository.findUserByEmail("user@user.com") == null) {
+            userRepository.save(new User("user@user.com", new BCryptPasswordEncoder().encode("user@user.com"), "user@user.com" , true,  new HashSet<>(Arrays.asList(roleRepository.findRoleByRole("USER") ) ) ));
+
+        }
         System.out.println("DB LOADED: USERS: " + userRepository.count() + " ROLES: " + roleRepository.count());
     }
 }
