@@ -94,7 +94,7 @@ public class HomeController {
         User userExists = userService.findUserByEmail(user.getEmail());
         if(userExists != null){
             bindingResult
-                    .rejectValue("email", "error.user","There is already a user register with the username provided" );
+                    .rejectValue("email", "email.missing","There is already a user register with the username provided" );
         }
         if(bindingResult.hasErrors()){
             modelAndView.setViewName("signup");
